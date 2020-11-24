@@ -14,7 +14,7 @@ import kotlin.collections.ArrayDeque;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 	
-	private ConnectionUtil conUtil ;
+	private ConnectionUtil conUtil = new ConnectionUtil();
 	
 	private PreparedStatement ps;
 	
@@ -27,8 +27,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		try(Connection con = conUtil.getConnection()){
 			
-			String sql = "insert into employe (first_name, last_name, email, contact, password, dept_id)"
-					+ " values (?, ? , ? , ?, ?, ?);";
+			String sql = "insert into employe (first_name, last_name, email, contact, password, dept)"
+					+ " values (?, ? , ? , ?, ?, department(?));";
 			
 			ps = con.prepareStatement(sql);
 			
@@ -37,7 +37,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setString(3, e.getEmail());
 			ps.setString(4, e.getContact());
 			ps.setString(5, e.getPassword());
-			ps.setInt(6, e.getDepartment().getDeptId());
+			ps.setString(6, String.valueOf(e.getDepartment()));
 			
 			ps.executeUpdate();
 			
@@ -123,7 +123,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setString(2, e.getLastName());
 			ps.setString(3, e.getEmail());
 			ps.setString(4, e.getContact());
-			ps.setInt(5, e.getDepartment().getDeptId());
+			ps.setString(5, String.valueOf(e.getDepartment()));
 			ps.setInt(6, e.getEmployeeId());
 			
 			ps.executeUpdate();

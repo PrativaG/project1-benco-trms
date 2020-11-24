@@ -92,7 +92,7 @@ public class EventDaoImplTest {
 	@Test
 	public void testInsertEvent() {
 		
-		String sql = "insert into emp_event (event_cost, event_type, start_date, end_date, grade, emp_id) "
+		String sql = "insert into emp_event (event_cost, event_type, start_date, end_date, presentation, emp_id) "
 				+ "values(?, ?, ?, ?, ?, ?)";
 		
 		try {
@@ -113,7 +113,7 @@ public class EventDaoImplTest {
 			Mockito.verify(spy).setString(2, event.getType());
 			Mockito.verify(spy).setDate(3, java.sql.Date.valueOf(event.getStartDate()));
 			Mockito.verify(spy).setDate(4, java.sql.Date.valueOf(event.getEndDate()));
-			
+			//need to find way to parse file to byte or largeobject in postgres
 			
 		}catch(SQLException e) {
 			e.printStackTrace();

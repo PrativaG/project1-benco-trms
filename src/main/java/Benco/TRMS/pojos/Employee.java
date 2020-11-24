@@ -16,6 +16,7 @@ public class Employee {
 	
 	private Department department; // enum vs class
 		
+
 	
 	public Employee() {
 		super();
@@ -27,6 +28,16 @@ public class Employee {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.department = department;
+		this.email = email;
+		this.password = password;
+		this.contact = contact;
+	}
+	
+	public Employee(String firstName, String lastName,String contact, String email,
+			String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.contact = contact;

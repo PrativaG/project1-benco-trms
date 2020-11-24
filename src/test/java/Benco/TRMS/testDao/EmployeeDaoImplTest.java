@@ -68,7 +68,7 @@ public class EmployeeDaoImplTest {
 		empDao = new EmployeeDaoImpl();
 		empDao.setConnUtil(conUtil);
 		
-		Mockito.when(dept.getDeptId()).thenReturn(1);
+		Mockito.when(emp.getDepartment()).thenReturn(Department.FINANCE);
 		
 		emp = new Employee("Mighty", "Jackson", dept, "123456789", "mj@mail.com", "password" );
 	}
@@ -97,8 +97,8 @@ public class EmployeeDaoImplTest {
 //	@Test
 //	public void testInsertEmployee() {
 //		
-//		String sql = "insert into employe (first_name, last_name, email, contact, password, dept_id)"
-//				+ " values (?, ? , ? , ?, ?, ?);";
+//		String sql = "insert into employe (first_name, last_name, email, contact, password, dept)"
+//					+ " values (?, ? , ? , ?, ?, department(?));";
 //		
 //		try {
 //			
@@ -119,7 +119,7 @@ public class EmployeeDaoImplTest {
 //			Mockito.verify(spy).setString(3, emp.getEmail());
 //			Mockito.verify(spy).setString(4, emp.getContact());
 //			Mockito.verify(spy).setString(5, emp.getPassword());
-//			Mockito.verify(spy).setInt(6, dept.getDeptId());
+//			Mockito.verify(spy).setString(6, String.valueOf(emp.getDepartment()));
 //			
 //			Mockito.verify(spy).executeUpdate();
 //			
@@ -133,8 +133,8 @@ public class EmployeeDaoImplTest {
 //	@Test
 //	public void testSelectById() {
 //		
-//		String sql = "insert into employe (first_name, last_name, email, contact, password, dept_id)"
-//				+ " values (?, ? , ? , ?, ?, ?);";
+//		String sql = "insert into employe (first_name, last_name, email, contact, password, dept)"
+//					+ " values (?, ? , ? , ?, ?, department(?));";
 //		try {
 //			
 //			trueStmt = realCon.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -144,7 +144,7 @@ public class EmployeeDaoImplTest {
 //			trueStmt.setString(3, emp.getEmail());
 //			trueStmt.setString(4, emp.getContact());
 //			trueStmt.setString(5, emp.getPassword());
-//			trueStmt.setInt(6, emp.getDepartment().getDeptId());
+//			trueStmt.setString(6, String.valueOf(emp.getDepartment()));
 //			
 //			 trueStmt.executeUpdate();
 //			
@@ -234,8 +234,8 @@ public class EmployeeDaoImplTest {
 	@Test 
 	public void testUpdateEmployee() {
 		
-		String sql = "insert into employe (first_name, last_name, email, contact, password, dept_id)"
-				+ " values (?, ? , ? , ?, ?, ?);";
+		String sql = "insert into employe (first_name, last_name, email, contact, password, dept)"
+				+ " values (?, ? , ? , ?, ?, department(?));";
 		try {
 			
 			trueStmt = realCon.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -245,7 +245,7 @@ public class EmployeeDaoImplTest {
 			trueStmt.setString(3, emp.getEmail());
 			trueStmt.setString(4, emp.getContact());
 			trueStmt.setString(5, emp.getPassword());
-			trueStmt.setInt(6, emp.getDepartment().getDeptId());
+			trueStmt.setString(6, String.valueOf(emp.getDepartment()));
 			
 			 trueStmt.executeUpdate();
 			
@@ -261,7 +261,7 @@ public class EmployeeDaoImplTest {
 		}
 		
 		sql = "update employe set first_name = ?, last_name = ?, email = ?, "
-				+ "contact = ?, dept_id = ? where emp_id = ?;";
+				+ "contact = ?, (department)dept = ? where emp_id = ?;";
 		
 		try {
 			
@@ -283,7 +283,7 @@ public class EmployeeDaoImplTest {
 			verify(spy).setString(2, emp.getLastName());
 			verify(spy).setString(3, emp.getEmail());
 			verify(spy).setString(4, emp.getContact());
-			verify(spy).setInt(5, emp.getDepartment().getDeptId());
+			verify(spy).setString(6, String.valueOf(emp.getDepartment()));
 			verify(spy).setInt(6, emp.getEmployeeId());
 			
 			verify(spy).executeUpdate();
@@ -298,8 +298,8 @@ public class EmployeeDaoImplTest {
 	
 	@Test
 	public void testDeleteById() {
-		String sql = "insert into employe (first_name, last_name, email, contact, password, dept_id)"
-				+ " values (?, ? , ? , ?, ?, ?);";
+		String sql = "insert into employe (first_name, last_name, email, contact, password, dept)"
+				+ " values (?, ? , ? , ?, ?, department(?));";
 		try {
 			
 			trueStmt = realCon.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -309,7 +309,7 @@ public class EmployeeDaoImplTest {
 			trueStmt.setString(3, emp.getEmail());
 			trueStmt.setString(4, emp.getContact());
 			trueStmt.setString(5, emp.getPassword());
-			trueStmt.setInt(6, emp.getDepartment().getDeptId());
+			trueStmt.setString(6, String.valueOf(emp.getDepartment()));
 			
 			 trueStmt.executeUpdate();
 			

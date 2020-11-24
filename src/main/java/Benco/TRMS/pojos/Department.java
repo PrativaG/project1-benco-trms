@@ -1,33 +1,11 @@
 package Benco.TRMS.pojos;
 
-public class Department {
+public enum Department {
 	
-	private int deptId;
+	HR,
+	QC,
+	SALES,
+	IT,
+	FINANCE;
 	
-	private String deptName;
-	
-
-	public Department(String deptName) {
-		super();
-		this.deptName = deptName;
-	}
-
-	public int getDeptId() {
-		return deptId;
-	}
-
-	public void setDeptId(int deptId) {
-		this.deptId = deptId;
-	}
-
-	public String getDeptName() {
-		return deptName;
-	}
-
-	public void setDeptName(String deptName) {
-		this.deptName = deptName;
-	}
-	
-	
-
 }

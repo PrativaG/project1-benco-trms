@@ -14,7 +14,9 @@ public class Event {
 	
 	private double cost;
 	
-	private File grade;
+	private String grade;
+	
+	private File presentation;
 	
 	private Employee emp;
 	
@@ -23,13 +25,13 @@ public class Event {
 		super();
 	}
 
-	public Event(String type, LocalDate startDate, LocalDate endDate, double cost, File grade) {
+	public Event(String type, LocalDate startDate, LocalDate endDate, double cost, File presentation) {
 		super();
 		this.type = type;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.cost = cost;
-		this.grade = grade;
+		this.presentation = presentation;
 	}
 
 	public String getType() {
@@ -55,6 +57,15 @@ public class Event {
 	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
+	
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 
 	public double getCost() {
 		return cost;
@@ -64,12 +75,12 @@ public class Event {
 		this.cost = cost;
 	}
 
-	public File getGrade() {
-		return grade;
+	public File getpresentation() {
+		return presentation;
 	}
 
-	public void setGrade(File grade) {
-		this.grade = grade;
+	public void setpresentation(File presentation) {
+		this.presentation = presentation;
 	}
 
 	public Employee getEmp() {
