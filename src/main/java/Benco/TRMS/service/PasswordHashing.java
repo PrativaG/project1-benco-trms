@@ -1,4 +1,4 @@
-package Benco.TRMS.pojos;
+package Benco.TRMS.service;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
@@ -10,6 +10,7 @@ import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordHashing {
 	
+	//generating password
 	public static String hashPassword(String pwd) throws NoSuchAlgorithmException, InvalidKeySpecException{
 		//generate char[]password, salt, iteration for PBEKeyspec
 		
@@ -42,6 +43,7 @@ public class PasswordHashing {
         }
     }
 	
+	//validating password
 	 public static boolean validatePassword(String originalPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException
 	    {
 	        String[] parts = storedPassword.split(":");
@@ -60,6 +62,7 @@ public class PasswordHashing {
 	        }
 	        return diff == 0;
 	    }
+	 
 	    private static byte[] fromHex(String hex) throws NoSuchAlgorithmException
 	    {
 	        byte[] bytes = new byte[hex.length() / 2];

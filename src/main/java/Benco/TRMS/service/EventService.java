@@ -1,5 +1,18 @@
 package Benco.TRMS.service;
 
-public interface EventService {
+import java.util.List;
 
+import Benco.TRMS.pojos.Event;
+
+public interface EventService {
+	
+	public Event createEvent(Event ev);
+	
+	public Event updateEvent(Event ev);
+	
+	public List<Event> getAllEvents();
+	
+	public List<Event> getAllEventByEmployeeId(int empId);
+	
+	public boolean deleteEventById(int eventId);
 }

@@ -2,6 +2,7 @@ package Benco.TRMS.dao;
 
 import java.util.List;
 
+import Benco.TRMS.pojos.Department;
 import Benco.TRMS.pojos.Event;
 
 public interface EventDao {
@@ -12,7 +13,7 @@ public interface EventDao {
 	
 	public List<Event> selectAllEvent();
 	
-	public List<Event> selectEventByDept(int deptId);
+	public List<Event> selectEventByDept(Department dep);
 	
 	public List<Event> selectEventByEmployee(int empId);
 	

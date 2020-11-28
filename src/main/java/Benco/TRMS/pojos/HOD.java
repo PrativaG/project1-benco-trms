@@ -15,11 +15,11 @@ public class HOD extends Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public HOD(String firstName, String lastName, Department department, String contact, String email,
-			String password) {
-		super(firstName, lastName, department, contact, email, password);
-		// TODO Auto-generated constructor stub
-	}
+//	public HOD(String firstName, String lastName, Department department, String contact, String email,
+//			String password) {
+//		super(firstName, lastName, department, contact, email, password);
+//		// TODO Auto-generated constructor stub
+//	}
 
 	public HOD(Employee emp) {
 		super();

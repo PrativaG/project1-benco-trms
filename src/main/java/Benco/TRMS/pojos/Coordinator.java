@@ -16,11 +16,11 @@ public class Coordinator extends Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Coordinator(String firstName, String lastName, Department department, String contact, String email,
-			String password) {
-		super(firstName, lastName, department, contact, email, password);
-		// TODO Auto-generated constructor stub
-	}
+//	public Coordinator(String firstName, String lastName, Department department, String contact, String email,
+//			String password) {
+//		super(firstName, lastName, department, contact, email, password);
+//		// TODO Auto-generated constructor stub
+//	}
 
 	public Coordinator(Employee emp) {
 		super();

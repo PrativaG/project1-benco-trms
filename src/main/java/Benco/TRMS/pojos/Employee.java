@@ -16,14 +16,14 @@ public class Employee {
 	
 	private Department department; // enum vs class
 		
-
+	private String title;
 	
 	public Employee() {
 		super();
 	}
 
 	public Employee(String firstName, String lastName, Department department, String contact, String email,
-			String password) {
+			String password, String title) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -31,6 +31,7 @@ public class Employee {
 		this.email = email;
 		this.password = password;
 		this.contact = contact;
+		this.title = title;
 	}
 	
 	public Employee(String firstName, String lastName,String contact, String email,
@@ -98,6 +99,14 @@ public class Employee {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	

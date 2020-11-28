@@ -13,10 +13,10 @@ public class DirectSupervisor extends Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DirectSupervisor( String firstName, String lastName, Department department, String contact, String email,
-			String password) {
-		super(firstName, lastName, department, contact, email, password);
-	}
+//	public DirectSupervisor( String firstName, String lastName, Department department, String contact, String email,
+//			String password) {
+//		super(firstName, lastName, department, contact, email, password);
+//	}
 
 	public DirectSupervisor(Employee emp) {
 		super();

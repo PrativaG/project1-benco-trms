@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import Benco.TRMS.pojos.Department;
 import Benco.TRMS.pojos.Employee;
 import Benco.TRMS.util.ConnectionUtil;
 import kotlin.collections.ArrayDeque;
@@ -27,8 +27,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		try(Connection con = conUtil.getConnection()){
 			
-			String sql = "insert into employe (first_name, last_name, email, contact, password, dept)"
-					+ " values (?, ? , ? , ?, ?, department(?));";
+			String sql = "insert into employe (first_name, last_name, email, contact, password, dept, title)"
+					+ " values (?, ? , ? , ?, ?, department(?), ?);";
 			
 			ps = con.prepareStatement(sql);
 			
@@ -38,6 +38,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setString(4, e.getContact());
 			ps.setString(5, e.getPassword());
 			ps.setString(6, String.valueOf(e.getDepartment()));
+			ps.setString(7, e.getTitle());
 			
 			ps.executeUpdate();
 			
@@ -69,6 +70,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				e.setLastName(rs.getString(3));
 				e.setEmail(rs.getString(4));
 				e.setContact(rs.getString(6));
+				e.setDepartment(Department.valueOf(rs.getString(7)));
+				e.setTitle(rs.getString(8));
 			}
 			
 			
@@ -98,7 +101,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				e.setLastName(rs.getString(3));
 				e.setEmail(rs.getString(4));
 				e.setContact(rs.getString(6));
-				
+				e.setDepartment(Department.valueOf(rs.getString(7)));
+				e.setTitle(rs.getString(8));
 				allEmployee.add(e);
 			}
 			
@@ -156,5 +160,73 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 		return false;
 	}
+	
+	@Override
+	public int countEmployeeByTitleAndDept(String title, Department dep) {
+		int count = -1;
+		
+		String sql = "select count(*) from employe where" +
+				" title = ? and dept = department(?);";
+		
+		try(Connection con = conUtil.getConnection()){
+			
+			
+			ps = con.prepareStatement(sql);
+			ps.setString(1, title);
+			ps.setString(2, String.valueOf(dep));
+			
+			ResultSet rs = ps.executeQuery();
+			
+				if(rs.next()) {
+					count = rs.getInt(1);
+					System.out.println(rs.getInt(1));
+				}else {
+					count = 0;
+				}
+			
+			System.out.println(count +"from daoimpl");
+
+				
+			
+		}catch(SQLException se) {
+			
+			se.printStackTrace();
+		}
+
+		return count;
+	}
+
+	@Override
+	public Employee selectByEmail(String email) {
+Employee e = new Employee();
+		
+		try(Connection con = conUtil.getConnection()){
+			String sql = "select * from employe where email = ?;";
+			
+			ps = con.prepareStatement(sql);
+			
+			ps.setString(1, email);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				e.setEmployeeId(rs.getInt(1));
+				e.setFirstName(rs.getString(2));
+				e.setLastName(rs.getString(3));
+				e.setEmail(rs.getString(4));
+				e.setPassword(rs.getString(5));
+				e.setContact(rs.getString(6));
+				e.setDepartment(Department.valueOf(rs.getString(7)));
+				e.setTitle(rs.getString(8));
+			}
+			
+			
+		}catch(SQLException se) {
+			se.printStackTrace();
+		}
+		return e;
+	}
+	
+	
 
 }

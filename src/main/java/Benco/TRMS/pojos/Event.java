@@ -6,17 +6,21 @@ import java.util.Date;
 
 public class Event {
 	
+	private int id;
+	
 	private String type;
 	
 	private LocalDate startDate;
 	
 	private LocalDate endDate;
 	
+	private LocalDate requestDate;
+	
 	private double cost;
 	
 	private String grade;
 	
-	private File presentation;
+//	private File presentation;
 	
 	private Employee emp;
 	
@@ -25,13 +29,23 @@ public class Event {
 		super();
 	}
 
-	public Event(String type, LocalDate startDate, LocalDate endDate, double cost, File presentation) {
+	public Event(String type, LocalDate startDate, LocalDate endDate, LocalDate reqDate, double cost) {
 		super();
 		this.type = type;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.requestDate = reqDate;
 		this.cost = cost;
-		this.presentation = presentation;
+	
+	}
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getType() {
@@ -75,13 +89,13 @@ public class Event {
 		this.cost = cost;
 	}
 
-	public File getpresentation() {
-		return presentation;
-	}
-
-	public void setpresentation(File presentation) {
-		this.presentation = presentation;
-	}
+//	public File getpresentation() {
+//		return presentation;
+//	}
+//
+//	public void setpresentation(File presentation) {
+//		this.presentation = presentation;
+//	}
 
 	public Employee getEmp() {
 		return emp;
@@ -90,8 +104,12 @@ public class Event {
 	public void setEmp(Employee emp) {
 		this.emp = emp;
 	}
-	
-	
-	
-	
+
+	public LocalDate getRequestDate() {
+		return requestDate;
+	}
+
+	public void setRequestDate(LocalDate requestDate) {
+		this.requestDate = requestDate;
+	}
 }
