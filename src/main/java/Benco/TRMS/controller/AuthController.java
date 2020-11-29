@@ -22,9 +22,12 @@ public class AuthController {
 			//checking if the employee is applier or approver
 			Employee emp = empServ.displayEmployeeByEmail(email);
 			
+			ctx.sessionAttribute("empId", emp.getEmployeeId());
+			
 			if(emp.getTitle().equals("General Employee")) {
 				
-				ctx.redirect("listEvent.html");
+				
+				ctx.redirect("dashboard.html");
 				
 			}
 			

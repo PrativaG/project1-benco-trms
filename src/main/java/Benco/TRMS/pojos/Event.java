@@ -20,7 +20,19 @@ public class Event {
 	
 	private String grade;
 	
+	private String description;
+	
 //	private File presentation;
+	
+	private double eligibleAmount;
+	
+	private String reason;//for rejection and added amount
+	
+	private String dsApproval;
+	
+	private String coordinatorApproval;
+	
+	private String hodApproval;
 	
 	private Employee emp;
 	
@@ -29,14 +41,34 @@ public class Event {
 		super();
 	}
 
-	public Event(String type, LocalDate startDate, LocalDate endDate, LocalDate reqDate, double cost) {
+	public Event(String type, LocalDate startDate, LocalDate endDate, LocalDate reqDate, double cost, String desc) {
 		super();
 		this.type = type;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.requestDate = reqDate;
 		this.cost = cost;
+		this.description = desc;
+	}
 	
+	public Event(String type, LocalDate startDate, LocalDate endDate, LocalDate reqDate, double cost, String desc, Employee emp) {
+		super();
+		this.type = type;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.requestDate = reqDate;
+		this.cost = cost;
+		this.description = desc;
+		this.emp = emp;
+	}
+	
+	
+	public Event(int id, double cost, String desc) {
+		super();
+		this.id = id;
+		this.cost = cost;
+		this.description = desc;
+		
 	}
 	
 	
@@ -112,4 +144,56 @@ public class Event {
 	public void setRequestDate(LocalDate requestDate) {
 		this.requestDate = requestDate;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getEligibleAmount() {
+		return eligibleAmount;
+	}
+
+	public void setEligibleAmount(double eligibleAmount) {
+		this.eligibleAmount = eligibleAmount;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getDsApproval() {
+		return dsApproval;
+	}
+
+	public void setDsApproval(String dsApproval) {
+		this.dsApproval = dsApproval;
+	}
+
+	public String getCoordinatorApproval() {
+		return coordinatorApproval;
+	}
+
+	public void setCoordinatorApproval(String coordinatorApproval) {
+		this.coordinatorApproval = coordinatorApproval;
+	}
+
+	public String getHodApproval() {
+		return hodApproval;
+	}
+
+	public void setHodApproval(String hodApproval) {
+		this.hodApproval = hodApproval;
+	}
+
+	
+	
+	
 }

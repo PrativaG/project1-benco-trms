@@ -3,33 +3,61 @@ package Benco.TRMS.service;
 import java.util.List;
 
 import Benco.TRMS.dao.EventDaoImpl;
+import Benco.TRMS.pojos.Employee;
 import Benco.TRMS.pojos.Event;
 
 public class EventServiceImpl implements EventService {
 	
 	private EventDaoImpl eventDao = new EventDaoImpl();
 	
+	private EmployeeServiceImpl empServ = new EmployeeServiceImpl();
+	
 	@Override
 	public Event createEvent(Event ev) {
+		
+		double eligibleAmt = calculateEligibleAmount(ev);
+		
+		if(ev.getEmp().getRemainingClaimAmt() < eligibleAmt) {
+			eligibleAmt = eligibleAmt - ev.getEmp().getRemainingClaimAmt();
+		}
+		
+		ev.setEligibleAmount(eligibleAmt);
+		
+		//updating employee available claim amount due to this event request
+		Employee updateClaimAmtEmployee = ev.getEmp();
+		double afterRequest = updateClaimAmtEmployee.getRemainingClaimAmt() - eligibleAmt;
+	
+		updateClaimAmtEmployee.setRemainingClaimAmt( afterRequest );
+		empServ.updateEmployee(ev.getEmp());
 		
 		return eventDao.insertEvent(ev);
 	}
 
 	@Override
 	public Event updateEvent(Event ev) {
-		// TODO Auto-generated method stub
+		
+		Event notUpdatedEvent = eventDao.selectById(ev.getId());
+		notUpdatedEvent.setCost(ev.getCost());
+		
+		double eligibleAmt = calculateEligibleAmount(notUpdatedEvent);
+		
+		ev.setEligibleAmount(eligibleAmt);
+		
+		if(eventDao.updateEventFromEmployee(ev)) return ev;
+		
 		return null;
 	}
 
 	@Override
 	public List<Event> getAllEventByEmployeeId(int empId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return eventDao.selectEventByEmployee(empId);
 	}
 
 	@Override
 	public boolean deleteEventById(int eventId) {
-		// TODO Auto-generated method stub
+		
+		if(eventDao.deleteById(eventId)) return true;
 		return false;
 	}
 
@@ -37,6 +65,49 @@ public class EventServiceImpl implements EventService {
 	public List<Event> getAllEvents() {
 		
 		return eventDao.selectAllEvent();
+	}
+
+	@Override
+	public Event getEventById(int eventId) {
+		
+		return eventDao.selectById(eventId);
+	}
+	
+	public double calculateEligibleAmount(Event ev) {
+		double coverageRate = 0.0 ;
+		 
+		switch(ev.getType()) {
+			
+			case "University":
+				coverageRate = 0.80;
+				break;
+				
+			case "Seminar":
+				coverageRate = 0.60;
+				break;
+			
+			case "Certification Preparation":
+				coverageRate = 0.75;
+				break;
+				
+			case "Certification":
+				coverageRate = 1;
+				break;
+			
+			case "Technical Training":
+				coverageRate = 0.90;
+				break;
+				
+			case "Others":
+				coverageRate = 0.30;
+				break;
+			
+		}
+			
+		//setting eligile amount on the basis of current available claim and coverage rate
+		double eligibleAmt =  ev.getCost() * coverageRate;
+		
+		return eligibleAmt;
 	}
 
 }

@@ -17,7 +17,7 @@ public interface EventDao {
 	
 	public List<Event> selectEventByEmployee(int empId);
 	
-	public boolean updateEvent(Event e);
+	public boolean updateEventFromEmployee(Event e);
 	
 	public boolean deleteById(int id);
 

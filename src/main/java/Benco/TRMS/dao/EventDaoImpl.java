@@ -28,8 +28,9 @@ public class EventDaoImpl implements EventDao{
 		
 		try(Connection con = conUtil.getConnection()){
 			
-			String sql = "insert into emp_event (event_cost, event_type, start_date, end_date, request_date)" +
-						" values(?, ?, ?, ?, ?);";
+			String sql = "insert into emp_event (event_cost, event_type, start_date, end_date, "
+					+ 	"request_date, description, ds_approval, hod_approval, coordinator_approval, emp_id, eligible_amount)" +
+						" values(?, ?, date(?), date(?), date(?), ?, ?, ?, ?, ?, ?);";
 			
 			ps =con.prepareStatement(sql);
 			
@@ -38,7 +39,13 @@ public class EventDaoImpl implements EventDao{
 			ps.setDate(3, Date.valueOf(e.getStartDate()));
 			ps.setDate(4, Date.valueOf(e.getEndDate()));
 			ps.setDate(5, Date.valueOf(e.getRequestDate()));
-						
+			ps.setString(6,  e.getDescription());
+			ps.setString(7, "Pending");
+			ps.setString(8, "Pending");			
+			ps.setString(9, "Pending");	
+			ps.setInt(10,  e.getEmp().getEmployeeId());
+			ps.setDouble(11, e.getEligibleAmount());
+
 			ps.executeUpdate();
 			
 			return e;
@@ -70,8 +77,15 @@ public class EventDaoImpl implements EventDao{
 				e.setCost(rs.getDouble(2));
 				e.setType(rs.getString(3));
 				e.setRequestDate((rs.getDate(4)).toLocalDate());
-				e.setStartDate((rs.getDate(7)).toLocalDate());
-				e.setEndDate((rs.getDate(8)).toLocalDate());
+				e.setStartDate((rs.getDate(5)).toLocalDate());
+				e.setEndDate((rs.getDate(6)).toLocalDate());
+				e.setDescription(rs.getString(7));
+				e.setReason(rs.getString(8));
+				e.setEligibleAmount(rs.getDouble(9));
+				e.setDsApproval(rs.getString(10));
+				e.setHodApproval(rs.getString(11));
+				e.setCoordinatorApproval(rs.getString(12));
+				e.setGrade(rs.getString(13));
 			}
 			return e;
 
@@ -100,8 +114,15 @@ public class EventDaoImpl implements EventDao{
 				e.setCost(rs.getDouble(2));
 				e.setType(rs.getString(3));
 				e.setRequestDate((rs.getDate(4)).toLocalDate());
-				e.setStartDate((rs.getDate(7)).toLocalDate());
-				e.setEndDate((rs.getDate(8)).toLocalDate());
+				e.setStartDate((rs.getDate(5)).toLocalDate());
+				e.setEndDate((rs.getDate(6)).toLocalDate());
+				e.setDescription(rs.getString(7));
+				e.setReason(rs.getString(8));
+				e.setEligibleAmount(rs.getDouble(9));
+				e.setDsApproval(rs.getString(10));
+				e.setHodApproval(rs.getString(11));
+				e.setCoordinatorApproval(rs.getString(12));
+				e.setGrade(rs.getString(13));
 				
 				allEvents.add(e);
 			}
@@ -154,7 +175,7 @@ public class EventDaoImpl implements EventDao{
 		try(Connection con = conUtil.getConnection()){
 			
 			String sql = "select * from emp_event"
-					+ " where event_id = ?"; 
+					+ " where emp_id = ?"; 
 			
 			ps =con.prepareStatement(sql);
 			
@@ -169,8 +190,15 @@ public class EventDaoImpl implements EventDao{
 				e.setCost(rs.getDouble(2));
 				e.setType(rs.getString(3));
 				e.setRequestDate((rs.getDate(4)).toLocalDate());
-				e.setStartDate((rs.getDate(7)).toLocalDate());
-				e.setEndDate((rs.getDate(8)).toLocalDate());
+				e.setStartDate((rs.getDate(5)).toLocalDate());
+				e.setEndDate((rs.getDate(6)).toLocalDate());
+				e.setDescription(rs.getString(7));
+				e.setReason(rs.getString(8));
+				e.setEligibleAmount(rs.getDouble(9));
+				e.setDsApproval(rs.getString(10));
+				e.setHodApproval(rs.getString(11));
+				e.setCoordinatorApproval(rs.getString(12));
+				e.setGrade(rs.getString(13));
 				
 				allEvents.add(e);
 			}
@@ -182,22 +210,22 @@ public class EventDaoImpl implements EventDao{
 	}
 
 	@Override
-	public boolean updateEvent(Event e) {
+	public boolean updateEventFromEmployee(Event e) {
 		
 		try(Connection con = conUtil.getConnection()){
 			
-			String sql = "update emp_event set (event_cost, event_type, start_date, end_date, request_date,  grade, presentation)"
+			String sql = "update emp_event set event_cost = ?, description =?, eligible_amount = ?"
 					+ " where event_id = ?;"; 
 			
 			ps =con.prepareStatement(sql);
 			
 			//need to figure out how to store/parse files
 			ps.setDouble(1, e.getCost());
-			ps.setString(2, e.getType());
-			ps.setDate(3, Date.valueOf(e.getStartDate()));
-			ps.setDate(4, Date.valueOf(e.getEndDate()));
-			ps.setDate(5, Date.valueOf(e.getRequestDate()));
-			ps.setString(6, e.getGrade());
+//			ps.setDate(2, Date.valueOf(e.getStartDate()));
+//			ps.setDate(3, Date.valueOf(e.getEndDate()));
+			ps.setString(2, e.getDescription());
+			ps.setDouble(3, e.getEligibleAmount());
+			ps.setInt(4, e.getId());
 //			ps.setbyte(7, Byte.vae.getpresentation());
 	
 			ps.executeUpdate();	

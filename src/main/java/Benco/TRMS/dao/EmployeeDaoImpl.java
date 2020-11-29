@@ -27,8 +27,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		
 		try(Connection con = conUtil.getConnection()){
 			
-			String sql = "insert into employe (first_name, last_name, email, contact, password, dept, title)"
-					+ " values (?, ? , ? , ?, ?, department(?), ?);";
+			String sql = "insert into employe (first_name, last_name, email, contact, password, dept, title, remainingClaimAmt)"
+					+ " values (?, ? , ? , ?, ?, department(?), ?, ?);";
 			
 			ps = con.prepareStatement(sql);
 			
@@ -39,6 +39,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setString(5, e.getPassword());
 			ps.setString(6, String.valueOf(e.getDepartment()));
 			ps.setString(7, e.getTitle());
+			ps.setDouble(8, 1000.00);
 			
 			ps.executeUpdate();
 			
@@ -69,9 +70,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				e.setFirstName(rs.getString(2));
 				e.setLastName(rs.getString(3));
 				e.setEmail(rs.getString(4));
+				e.setPassword(rs.getString(5));
 				e.setContact(rs.getString(6));
 				e.setDepartment(Department.valueOf(rs.getString(7)));
 				e.setTitle(rs.getString(8));
+				e.setRemainingClaimAmt(rs.getDouble(9));
 			}
 			
 			
@@ -100,10 +103,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				e.setFirstName(rs.getString(2));
 				e.setLastName(rs.getString(3));
 				e.setEmail(rs.getString(4));
+				e.setPassword(rs.getString(5));
 				e.setContact(rs.getString(6));
 				e.setDepartment(Department.valueOf(rs.getString(7)));
 				e.setTitle(rs.getString(8));
-				allEmployee.add(e);
+				e.setRemainingClaimAmt(rs.getDouble(9));
 			}
 			
 		}catch(SQLException se) {
@@ -119,7 +123,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		try(Connection con = conUtil.getConnection()){
 			
 			String sql = "update employe set first_name = ?, last_name = ?, email = ?, "
-					+ "contact = ?, dept_id = ? where emp_id = ?;";
+					+ "contact = ?, dept = department(?), remainingclaimamt = ? where emp_id = ?;";
 			
 			ps = con.prepareStatement(sql);
 			
@@ -127,8 +131,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setString(2, e.getLastName());
 			ps.setString(3, e.getEmail());
 			ps.setString(4, e.getContact());
+//			ps.setString(5, e.getPassword());
 			ps.setString(5, String.valueOf(e.getDepartment()));
-			ps.setInt(6, e.getEmployeeId());
+			ps.setDouble(6, e.getRemainingClaimAmt());
+			ps.setInt(7, e.getEmployeeId());
 			
 			ps.executeUpdate();
 			
@@ -198,7 +204,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public Employee selectByEmail(String email) {
-Employee e = new Employee();
+		Employee e = new Employee();
 		
 		try(Connection con = conUtil.getConnection()){
 			String sql = "select * from employe where email = ?;";
@@ -218,6 +224,7 @@ Employee e = new Employee();
 				e.setContact(rs.getString(6));
 				e.setDepartment(Department.valueOf(rs.getString(7)));
 				e.setTitle(rs.getString(8));
+				e.setRemainingClaimAmt(rs.getDouble(9));
 			}
 			
 			

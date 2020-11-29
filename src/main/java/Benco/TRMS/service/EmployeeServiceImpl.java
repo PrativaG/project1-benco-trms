@@ -45,19 +45,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee displayEmployeeById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return empDao.selectById(id);
 	}
 
 	@Override
 	public List<Employee> displayAllEmployees() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 	@Override
 	public boolean updateEmployee(Employee e) {
-		// TODO Auto-generated method stub
+		
+		if(empDao.updateEmployee(e)) return true;
+		
 		return false;
 	}
 

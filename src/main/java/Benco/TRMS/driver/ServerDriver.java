@@ -26,11 +26,13 @@ public class ServerDriver {
 		app.get("/hello", ctx -> ctx.html("Hello project 1 so so exciting!"));
 		app.post(EMP_URL,  ctx -> empCont.createEmployee(ctx));
 		
-		
 		//handling all event request
 		app.post(EVENT_URL, ctx -> eventCont.createEvent(ctx));
-		app.get(EVENT_URL, ctx -> eventCont.getAllEvents(ctx));
-		app.get(EVENT_URL +"/:empId", ctx -> eventCont.getAllEventsByEmployeeId(ctx));
+//		app.get(EVENT_URL +"/:eventId", ctx -> eventCont.storeEventIdAndDisplay(ctx));
+		app.get(EVENT_URL +"/:eventId", ctx -> eventCont.getEventByEventId(ctx));
+		app.get(EVENT_URL, ctx -> eventCont.getAllEventsByEmployeeId(ctx));
+		app.delete(EVENT_URL +"/:eventId", ctx -> eventCont.deleteEvent(ctx));
+		app.post(EVENT_URL +"/:eventId", ctx -> eventCont.updateEventFromEmployee(ctx));
 		
 		//handling all login 
 		app.post(LOGIN_URL, ctx -> authCont.login(ctx));

@@ -18,6 +18,8 @@ public class Employee {
 		
 	private String title;
 	
+	private double remainingClaimAmt;
+	
 	public Employee() {
 		super();
 	}
@@ -109,5 +111,11 @@ public class Employee {
 		this.title = title;
 	}
 
-	
+	public double getRemainingClaimAmt() {
+		return remainingClaimAmt;
+	}
+
+	public void setRemainingClaimAmt(double remainingClaimAmt) {
+		this.remainingClaimAmt = remainingClaimAmt;
+	}
 }

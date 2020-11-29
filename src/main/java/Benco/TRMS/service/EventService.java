@@ -8,6 +8,8 @@ public interface EventService {
 	
 	public Event createEvent(Event ev);
 	
+	public Event getEventById(int eventId);
+	
 	public Event updateEvent(Event ev);
 	
 	public List<Event> getAllEvents();
