@@ -70,9 +70,13 @@ public class AuthServiceImpl implements AuthService{
 	}
 
 	@Override
-	public String validateToken(String token) {
+	public boolean validateToken(String token) {
+		 
+		if(tokenRepo.get(token) != null) {
+			return true;
+		}
 		
-		return tokenRepo.get(token);
+		return false;
 	}
 
 }

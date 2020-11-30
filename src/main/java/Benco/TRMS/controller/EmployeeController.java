@@ -18,29 +18,45 @@ public class EmployeeController {
 		String lname = ctx.formParam("lastName");
 		String email = ctx.formParam("email");
 		String password = ctx.formParam("password");
+		String confirmPw = ctx.formParam("confirm-password");
 		String contact = ctx.formParam("contact");
 		Department dept = Department.valueOf(ctx.formParam("department").toUpperCase());
 		String empPost = ctx.formParam("title");
 		
-		System.out.println(dept);
-		System.out.println(empPost);
+		//checking for password match
+		
+		
+		System.out.println(contact.length());
 		
 		Employee e = new Employee(fname, lname, dept, contact,  email, password, empPost);
 		
+		if(!e.getPassword().equals(confirmPw)) {
+			
+			ctx.redirect("login.html", 422);
+			
+		}
+		if(e.getContact().length() < 10 || e.getContact().length() > 10) {
+			
+			System.out.println("checking phone length");
+			ctx.redirect("login.html");
+			
+		}
 		
+		Employee createdEmployee;
 		try {
 			
-			empServ.createEmployee(e);
+			createdEmployee = empServ.createEmployee(e);
 			
 		} catch (TitleNotAvailableException e1) {
 			
-			System.out.println("not available, from error");
-			ctx.status(400);
-			ctx.redirect("registration.html");
+			System.out.println("Title not available error");
+			
+			ctx.redirect("registration.html", 400);
 			return;
 		}
 		
 		ctx.status(201);
+		ctx.sessionAttribute("empId", createdEmployee.getEmployeeId());
 		
 		if(e.getTitle().equals("General Employee")) {
 			ctx.redirect("dashboard.html");
@@ -49,9 +65,6 @@ public class EmployeeController {
 			ctx.redirect("approverDashboard.html");
 		}
 		
-	}
-	
-	
-		
+	}	
 	
 }

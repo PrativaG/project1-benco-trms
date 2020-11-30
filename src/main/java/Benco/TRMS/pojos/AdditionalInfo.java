@@ -1,56 +1,85 @@
 package Benco.TRMS.pojos;
 
-public class AdditionalInfo<T> {
+public class AdditionalInfo {
 	
-	private int id;
+	private int infoId;
 	
-	private T requestBy;
+	private int dsId;
 	
-	private T requestTo;
+	private int hodId;
 	
-	private String info;
+	private int bcId;
 	
-	private Reimbursement rem;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public T getRequestBy() {
-		return requestBy;
-	}
-
-	public void setRequestBy(T requestBy) {
-		this.requestBy = requestBy;
-	}
-
-	public T getRequestTo() {
-		return requestTo;
-	}
-
-	public void setRequestTo(T requestTo) {
-		this.requestTo = requestTo;
-	}
-
-	public String getInfo() {
-		return info;
-	}
-
-	public void setInfo(String info) {
-		this.info = info;
-	}
-
-	public Reimbursement getRem() {
-		return rem;
-	}
-
-	public void setRem(Reimbursement rem) {
-		this.rem = rem;
-	}
+	private String infoByEmp;
 	
+	private String infoByDS;
+	
+	private String infoByHod;
+			
+	private Event event ;
+
+	public int getInfoId() {
+		return infoId;
+	}
+
+	public void setInfoId(int infoId) {
+		this.infoId = infoId;
+	}
+
+	public int getDsId() {
+		return dsId;
+	}
+
+	public void setDsId(int dsId) {
+		this.dsId = dsId;
+	}
+
+	public int getHodId() {
+		return hodId;
+	}
+
+	public void setHodId(int hodId) {
+		this.hodId = hodId;
+	}
+
+	public int getBcId() {
+		return bcId;
+	}
+
+	public void setBcId(int bcId) {
+		this.bcId = bcId;
+	}
+
+	public String getInfoByEmp() {
+		return infoByEmp;
+	}
+
+	public void setInfoByEmp(String infoByEmp) {
+		this.infoByEmp = infoByEmp;
+	}
+
+	public String getInfoByDS() {
+		return infoByDS;
+	}
+
+	public void setInfoByDS(String infoByDS) {
+		this.infoByDS = infoByDS;
+	}
+
+	public String getInfoByHod() {
+		return infoByHod;
+	}
+
+	public void setInfoByHod(String infoByHod) {
+		this.infoByHod = infoByHod;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 
 }

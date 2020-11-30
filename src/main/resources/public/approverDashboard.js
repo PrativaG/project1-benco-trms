@@ -28,8 +28,6 @@ window.onload = function(){
                 console.log("Wait FINISHED!");
                 console.log(document.cookie);
                 
-
-
                 //logic to add to event table
                 if(xhr.status == 400){
 
@@ -66,10 +64,9 @@ let addEventToRow = function(event){
     let dsApproveCol = document.createElement("td");
     let hodApprovalCol = document.createElement("td");
     let coordApprovalCol = document.createElement("td");
-    let detailsCol = document.createElement("td");
-    let gradeCol = document.createElement("td");
     let acceptCol = document.createElement("td");
     let denyCol = document.createElement("td");
+    let detailsCol = document.createElement("td");
     let additionalInfoCol = document.createElement("td");
 
     tableRow.appendChild(typeCol);
@@ -77,10 +74,9 @@ let addEventToRow = function(event){
     tableRow.appendChild(dsApproveCol);
     tableRow.appendChild(hodApprovalCol);
     tableRow.appendChild(coordApprovalCol);
-    tableRow.appendChild(detailsCol);
-    tableRow.appendChild(gradeCol); 
     tableRow.appendChild(acceptCol);
     tableRow.appendChild(denyCol);
+    tableRow.appendChild(detailsCol);
     tableRow.appendChild(additionalInfoCol);
 
     table.appendChild(tableRow);
@@ -101,19 +97,8 @@ let addEventToRow = function(event){
     detailForm.appendChild(input1);
     detailForm.appendChild(input2);
 
-    //creating link and button for add grades
-    let addGradeLink = document.createElement("a");
-    let gradelink = document.createTextNode("Add Grade"); 
-    addGradeLink.appendChild(gradelink);
-    addGradeLink.title = "Grade";
-    addGradeLink.href = "addGrade.html";
-
-    let addGrade = document.createElement("button");
-    addGrade.appendChild(addGradeLink);
-
     //creating form and button for accepting request
     let acceptForm = document.createElement("form");
-    acceptForm.className = "accept-button";
     acceptForm.action = "http://localhost:9090/event/dashboard/" +event.id;
     acceptForm.method = "POST";
     input1 = document.createElement("input");
@@ -125,6 +110,8 @@ let addEventToRow = function(event){
 
     input2.type = "submit";
     input2.value = "Accept";
+    input2.className = "smallButton";
+    input2.id = "greenButton";
 
     acceptForm.appendChild(input1);
     acceptForm.appendChild(input2);
@@ -141,26 +128,15 @@ let addEventToRow = function(event){
 
     input2.type = "submit";
     input2.value = "Deny";
-    input2.className = "open-button";
+    input2.className = "smallButton";
+    input2.id = "redButton";
 
     denyForm.appendChild(input1);
     denyForm.appendChild(input2);
 
     //creating link and button for updating request
     let additionalInfoForm = document.createElement("form");
-
-    if(event.emp.title == "Direct Supervisor"){
-        additionalInfoForm.action = "localhost:/";
-    }
-
-    if(event.emp.title == "Department Head"){
-        additionalInfoForm.action = "addInfoFormForHOD.html";
-    }
-
-    if(event.emp.title == "Benefit Coordinator"){
-        additionalInfoForm.action = "addInfoFormForBC.html";
-    }
-
+    additionalInfoForm.action = "addInfoReqForm.html";
     let inputx = document.createElement("input");
     let inputy = document.createElement("input");
 
@@ -180,7 +156,6 @@ let addEventToRow = function(event){
     hodApprovalCol.innerHTML = event.hodApproval;
     coordApprovalCol.innerHTML = event.coordinatorApproval;
     detailsCol.appendChild(detailForm);
-    gradeCol.appendChild(addGrade);
     acceptCol.appendChild(acceptForm);
     denyCol.appendChild(denyForm);
     additionalInfoCol.appendChild(additionalInfoForm);
@@ -221,41 +196,7 @@ let popFormForDeny = function(){
     div.appendChild(denyForm);
 
 }
-// let popFormForDeny = function(ev){
 
-//     let div = document.createElement("div");
-//     div.className = "form-popup";
-//     div.id = "myForm";
-
-//     let denyForm = document.createElement("form");
-//     denyForm.className = "form-contianer";
-//     denyForm.action = "http://localhost:9090/event/";
-//     denyForm.method = "POST";
-//     let input1 = document.createElement("input");
-//     let input2 = document.createElement("input");
-//     let input3 = document.createElement("input");
-//     let label = document.createElement("label");
-
-//     input1.type = "hidden";
-//     input1.name = "eventId";
-//     // input1.value = event.id;
-
-//     label.innerHTML = "Please provide reason for your denial: "
-//     input2.type = "text";
-//     input2.name = "reason";
-
-//     input3.type = "submit";
-//     input3.className = "btn";
-//     input3.value = "Submit!";
-
-//     denyForm.appendChild(input1);
-//     denyForm.appendChild(label);
-//     denyForm.appendChild(input2);
-//     denyForm.appendChild(input3);
-
-//     div.appendChild(denyForm);
-
-// }
 
 
 

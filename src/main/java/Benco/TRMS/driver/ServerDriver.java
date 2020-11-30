@@ -11,7 +11,6 @@ public class ServerDriver {
 	private static final String EVENT_URL = "/event";
 	private static final String LOGIN_URL = "/login";
 
-
 	private static EmployeeController empCont = new EmployeeController();
 	private static EventController eventCont = new EventController();
 	private static AuthController authCont = new AuthController();
@@ -29,15 +28,20 @@ public class ServerDriver {
 		//handling all event request
 		app.post(EVENT_URL, ctx -> eventCont.createEvent(ctx));
 		app.get(EVENT_URL +"/dashboard", ctx -> eventCont.getEventByEmpDepartment(ctx));
-		app.get(EVENT_URL +"/:eventId", ctx -> eventCont.getEventByEventId(ctx));
-		app.get(EVENT_URL, ctx -> eventCont.getAllEventsByEmployeeId(ctx));
+		app.get(EVENT_URL +"/:eventId",  ctx -> { if(authCont.checkUser(ctx)) { eventCont.getEventByEventId(ctx); } 
+        								else ctx.redirect("employee-login.html");});
+		
+		app.get(EVENT_URL, ctx -> { if(authCont.checkUser(ctx)) { eventCont.getAllEventsByEmployeeId(ctx); } 
+									else ctx.redirect("employee-login.html");});
+		
 		app.delete(EVENT_URL +"/:eventId", ctx -> eventCont.deleteEvent(ctx));
 		app.post(EVENT_URL +"/:eventId", ctx -> eventCont.updateEventFromEmployee(ctx));
 		app.post(EVENT_URL +"/dashboard/:eventId", ctx -> eventCont.updateEventFromApprover(ctx));
 		
-		//handling all login 
+		//handling all login and logout requests
 		app.post(LOGIN_URL, ctx -> authCont.login(ctx));
 		app.get(LOGIN_URL, ctx -> authCont.checkUser(ctx));
+		app.post("/logout", ctx -> {authCont.logout(ctx);});
 	}
 
 }

@@ -11,6 +11,21 @@ public class AuthController {
 	
 	EmployeeServiceImpl empServ = new EmployeeServiceImpl();
 	
+	public boolean logout(Context ctx) {
+		
+		try {
+			ctx.clearCookieStore();
+			 ctx.redirect("login.html");
+			return true;
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		return false;
+
+	}
+	
 	public void login(Context ctx) {
 		String email = ctx.formParam("email");
 		String password = ctx.formParam("password");
@@ -44,9 +59,11 @@ public class AuthController {
 		}
 	}
 	
-	public void checkUser(Context ctx) {
-		System.out.println("Get request for login just made");
-		ctx.html(auth.validateToken(ctx.cookieStore("security")));
+	public boolean checkUser(Context ctx) {
+		boolean result = auth.validateToken(ctx.cookieStore("security"));
+		return result;
 	}
+	
+	
 
 }

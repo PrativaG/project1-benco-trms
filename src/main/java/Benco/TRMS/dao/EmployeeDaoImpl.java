@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			String sql = "insert into employe (first_name, last_name, email, contact, password, dept, title, remainingClaimAmt)"
 					+ " values (?, ? , ? , ?, ?, department(?), ?, ?);";
 			
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
 			ps.setString(1, e.getFirstName());
 			ps.setString(2, e.getLastName());
@@ -42,6 +43,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			ps.setDouble(8, 1000.00);
 			
 			ps.executeUpdate();
+			
+			ResultSet rs = ps.getGeneratedKeys();
+			
+			rs.next();
+			
+			int id = rs.getInt(1);
+			
+			e.setEmployeeId(id);
 			
 			return e;
 			
@@ -185,13 +194,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			
 				if(rs.next()) {
 					count = rs.getInt(1);
-					System.out.println(rs.getInt(1));
 				}else {
 					count = 0;
 				}
-			
-			System.out.println(count +"from daoimpl");
-
 				
 			
 		}catch(SQLException se) {

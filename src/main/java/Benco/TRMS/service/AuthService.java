@@ -6,5 +6,5 @@ public interface AuthService {
 		
 		public String createToken(String s);
 		
-		public String validateToken(String s);
+		public boolean validateToken(String s);
 }

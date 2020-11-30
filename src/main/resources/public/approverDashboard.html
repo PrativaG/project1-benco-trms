@@ -7,27 +7,33 @@
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+
+    <img src = "trms-logo.png">
+
     <div class="dropdown">
-        <button class="dropbtn">Dropdown</button>
+        <button class="dropbtn"> Menu </button>
+
         <div class="dropdown-content">
           <a id ="profile" href="profile.html">Your Profile</a>
-          <a href="#">Logout</a>
+          <form id="logoutForm" method="post" action = "http://localhost:9090/logout">
+              <input id = "logoutBtn" type ="submit"  value="Logout">
+          </form>
         </div>   
     </div>
     
    <div id = "wrapper">
     <div id ="listRequest">
         <h1>  Reimbursements! </h1>
-        <table id = "approve-event-table">
+        <table class = "tableStyle" id = "approve-event-table">
             <tr>
                 <th> Event Type</th> 
                 <th> Reimbursement Amount</th>
                 <th> Supervisor Approval</th>
                 <th> HOD Approval</th>
                 <th> Coordinator Approval</th>
-                <th> Details </th>
                 <th> Accept </th>
                 <th> Deny </th>
+                <th> Details </th>
                 <th> Additional Info</th>
             </tr>
     

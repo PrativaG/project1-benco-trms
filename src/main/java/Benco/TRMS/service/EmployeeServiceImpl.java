@@ -36,10 +36,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 				newEmp = empDao.insertEmployee(e);
 			}
 		}
+		
+		if(post.equals("Department Head") || post.equals("Benefit Coordinator") || post.equals("Direct Manager")) {
+			count = empDao.countEmployeeByTitleAndDept(post, e.getDepartment());
+			System.out.println(count);
+			if( count >= 1) {
+				throw new TitleNotAvailableException();
+			}
+			if(count < 1) {
+				e = setupPassword(e);
+				newEmp = empDao.insertEmployee(e);
+			}
+		}
 		else {
 		e = setupPassword(e);
 		newEmp = empDao.insertEmployee(e);
 		}
+		
 		return newEmp;
 	}
 
