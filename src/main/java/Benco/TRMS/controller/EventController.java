@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import Benco.TRMS.pojos.Department;
 import Benco.TRMS.pojos.Employee;
 import Benco.TRMS.pojos.Event;
 import Benco.TRMS.service.EmployeeServiceImpl;
@@ -76,13 +77,19 @@ public class EventController {
 	
 	public void getEventByEmpDepartment(Context ctx) {
 		
-		if(ctx.sessionAttribute("empId") != null ) {
+		List<Event> eventList = new ArrayList<>();
+		
+		if(ctx.sessionAttribute("empDept") != null ) {
 			
-			int empId = ctx.sessionAttribute("empId");
+			Department empDept = ctx.sessionAttribute("empDept");
 			
-			//TODO-get info of employee department and fetch event of that department
+			eventList = eventServ.getAllEventByEmployeeDept(empDept);
 			
+			System.out.println(empDept);
+						
 			}
+		System.out.println(eventList.size());
+		ctx.json(eventList);
 	}
 	
 	public void deleteEvent(Context ctx) {
@@ -105,6 +112,42 @@ public class EventController {
 		eventServ.updateEvent(ev);
 		
 		ctx.redirect("http://localhost:9090/dashboard.html");
+	}
+	
+	public void updateEventFromApprover(Context ctx) {
+		
+		//fetching employee so that we can know title and approval status
+		Employee e = empServ.displayEmployeeById(ctx.sessionAttribute("empId"));
+		String empTitle = e.getTitle();
+		
+		int id = Integer.valueOf(ctx.pathParam("eventId"));
+		
+		//fetching event so that we do not loose prev values if we create new one
+		Event ev = eventServ.getEventById(id);
+		
+		String approval = ctx.formParam("approval");
+		
+		if(approval.equals("Denied")) {
+			String reason = ctx.formParam("reason");
+			ev.setReason(reason);
+		}
+		
+		if(empTitle.equals("Direct Supervisor")) {
+			ev.setDsApproval(approval);
+		}
+		
+		if(empTitle.equals("Department Head")) {
+			ev.setHodApproval(approval);
+		}
+		
+		if(empTitle.equals("Benefit Coordinator")) {
+			ev.setCoordinatorApproval(approval);
+		}
+		
+		eventServ.updateEventFromApprover(ev);
+		
+		ctx.redirect("http://localhost:9090/approverDashboard.html");
+		
 	}
 	
 	public void storeEventIdAndDisplay(Context ctx) {

@@ -33,7 +33,8 @@ public class AuthController {
 			
 			else {
 				
-				ctx.redirect("approve.html");
+				ctx.sessionAttribute("empDept", emp.getDepartment());
+				ctx.redirect("approverDashboard.html");
 				
 			}
 			

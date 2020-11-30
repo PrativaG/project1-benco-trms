@@ -41,7 +41,14 @@ public class EmployeeController {
 		}
 		
 		ctx.status(201);
-		ctx.redirect("application.html");
+		
+		if(e.getTitle().equals("General Employee")) {
+			ctx.redirect("dashboard.html");
+		}
+		else {
+			ctx.redirect("approverDashboard.html");
+		}
+		
 	}
 	
 	

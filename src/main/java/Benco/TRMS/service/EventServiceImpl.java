@@ -3,6 +3,7 @@ package Benco.TRMS.service;
 import java.util.List;
 
 import Benco.TRMS.dao.EventDaoImpl;
+import Benco.TRMS.pojos.Department;
 import Benco.TRMS.pojos.Employee;
 import Benco.TRMS.pojos.Event;
 
@@ -32,7 +33,8 @@ public class EventServiceImpl implements EventService {
 		
 		return eventDao.insertEvent(ev);
 	}
-
+	
+	//from applier side
 	@Override
 	public Event updateEvent(Event ev) {
 		
@@ -47,6 +49,15 @@ public class EventServiceImpl implements EventService {
 		
 		return null;
 	}
+	
+	@Override
+	public Event updateEventFromApprover(Event ev) {
+		
+		if(eventDao.updateEventFromApprover(ev)) return ev;
+		
+		return null;
+	}
+
 
 	@Override
 	public List<Event> getAllEventByEmployeeId(int empId) {
@@ -110,4 +121,11 @@ public class EventServiceImpl implements EventService {
 		return eligibleAmt;
 	}
 
+	@Override
+	public List<Event> getAllEventByEmployeeDept(Department dept) {
+		
+		return eventDao.selectEventByDept(dept);
+	}
+
+	
 }

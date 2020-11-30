@@ -28,11 +28,12 @@ public class ServerDriver {
 		
 		//handling all event request
 		app.post(EVENT_URL, ctx -> eventCont.createEvent(ctx));
-//		app.get(EVENT_URL +"/:eventId", ctx -> eventCont.storeEventIdAndDisplay(ctx));
+		app.get(EVENT_URL +"/dashboard", ctx -> eventCont.getEventByEmpDepartment(ctx));
 		app.get(EVENT_URL +"/:eventId", ctx -> eventCont.getEventByEventId(ctx));
 		app.get(EVENT_URL, ctx -> eventCont.getAllEventsByEmployeeId(ctx));
 		app.delete(EVENT_URL +"/:eventId", ctx -> eventCont.deleteEvent(ctx));
 		app.post(EVENT_URL +"/:eventId", ctx -> eventCont.updateEventFromEmployee(ctx));
+		app.post(EVENT_URL +"/dashboard/:eventId", ctx -> eventCont.updateEventFromApprover(ctx));
 		
 		//handling all login 
 		app.post(LOGIN_URL, ctx -> authCont.login(ctx));

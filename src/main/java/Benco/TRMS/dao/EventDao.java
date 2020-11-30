@@ -19,6 +19,8 @@ public interface EventDao {
 	
 	public boolean updateEventFromEmployee(Event e);
 	
+	public boolean updateEventFromApprover(Event e);
+	
 	public boolean deleteById(int id);
 
 }
