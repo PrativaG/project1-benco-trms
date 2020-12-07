@@ -12,6 +12,7 @@ import java.util.List;
 import Benco.TRMS.pojos.Department;
 import Benco.TRMS.pojos.Employee;
 import Benco.TRMS.pojos.Event;
+import Benco.TRMS.pojos.Grade;
 import Benco.TRMS.util.ConnectionUtil;
 
 public class EventDaoImpl implements EventDao{
@@ -21,6 +22,7 @@ public class EventDaoImpl implements EventDao{
 	private PreparedStatement ps;
 	
 	private EmployeeDaoImpl empDao = new EmployeeDaoImpl();
+	private GradeDaoImpl gradeDao = new GradeDaoImpl();
 	
 	public void setConnUtil(ConnectionUtil connUtil) {
 		this.conUtil = connUtil;
@@ -88,10 +90,12 @@ public class EventDaoImpl implements EventDao{
 				e.setDsApproval(rs.getString(10));
 				e.setHodApproval(rs.getString(11));
 				e.setCoordinatorApproval(rs.getString(12));
-				e.setGrade(rs.getString(13));
 				
-				Employee em = empDao.selectById(rs.getInt(15));
+				Employee em = empDao.selectById(rs.getInt(13));
 				e.setEmp(em);
+				
+				Grade g = gradeDao.selectGradeById(rs.getInt(14));
+				e.setGrade(g);
 			}
 			return e;
 
@@ -128,10 +132,12 @@ public class EventDaoImpl implements EventDao{
 				e.setDsApproval(rs.getString(10));
 				e.setHodApproval(rs.getString(11));
 				e.setCoordinatorApproval(rs.getString(12));
-				e.setGrade(rs.getString(13));
 				
-				Employee em = empDao.selectById(rs.getInt(15));
+				Employee em = empDao.selectById(rs.getInt(13));
 				e.setEmp(em);
+				
+				Grade g = gradeDao.selectGradeById(rs.getInt(14));
+				e.setGrade(g);
 				
 				allEvents.add(e);
 			}
@@ -173,10 +179,59 @@ public class EventDaoImpl implements EventDao{
 				e.setDsApproval(rs.getString(10));
 				e.setHodApproval(rs.getString(11));
 				e.setCoordinatorApproval(rs.getString(12));
-				e.setGrade(rs.getString(13));
 				
-				Employee em = empDao.selectById(rs.getInt(15));
+				Employee em = empDao.selectById(rs.getInt(13));
 				e.setEmp(em);
+				
+				Grade g = gradeDao.selectGradeById(rs.getInt(14));
+				e.setGrade(g);
+				
+				allEvents.add(e);
+			}
+			
+		}catch(SQLException s) {
+			s.printStackTrace();
+		}
+		return allEvents;
+	}
+	
+	@Override
+	public List<Event> selectEventByTtitle(String title) {
+		List<Event> allEvents = new ArrayList<>();
+		
+		try(Connection con = conUtil.getConnection()){
+			
+			String sql = "select * from emp_event ev, employe em"
+					+ " where ev.emp_id = em.emp_id"
+					+ " and em.title = ?;"; 
+			
+			ps =con.prepareStatement(sql);
+			
+			ps.setString(1, title);
+				
+			ResultSet rs = ps.executeQuery();	
+			
+			while(rs.next()) {
+				Event e = new Event();
+				
+				e.setId(rs.getInt(1));
+				e.setCost(rs.getDouble(2));
+				e.setType(rs.getString(3));
+				e.setRequestDate((rs.getDate(4)).toLocalDate());
+				e.setStartDate((rs.getDate(5)).toLocalDate());
+				e.setEndDate((rs.getDate(6)).toLocalDate());
+				e.setDescription(rs.getString(7));
+				e.setReason(rs.getString(8));
+				e.setEligibleAmount(rs.getDouble(9));
+				e.setDsApproval(rs.getString(10));
+				e.setHodApproval(rs.getString(11));
+				e.setCoordinatorApproval(rs.getString(12));
+				
+				Employee em = empDao.selectById(rs.getInt(13));
+				e.setEmp(em);
+				
+				Grade g = gradeDao.selectGradeById(rs.getInt(14));
+				e.setGrade(g);
 				
 				allEvents.add(e);
 			}
@@ -217,10 +272,12 @@ public class EventDaoImpl implements EventDao{
 				e.setDsApproval(rs.getString(10));
 				e.setHodApproval(rs.getString(11));
 				e.setCoordinatorApproval(rs.getString(12));
-				e.setGrade(rs.getString(13));
 				
-				Employee em = empDao.selectById(rs.getInt(15));
+				Employee em = empDao.selectById(rs.getInt(13));
 				e.setEmp(em);
+				
+				Grade g = gradeDao.selectGradeById(rs.getInt(14));
+				e.setGrade(g);
 				
 				allEvents.add(e);
 			}
@@ -236,7 +293,7 @@ public class EventDaoImpl implements EventDao{
 		
 		try(Connection con = conUtil.getConnection()){
 			
-			String sql = "update emp_event set event_cost = ?, description =?, eligible_amount = ?"
+			String sql = "update emp_event set event_cost = ?, description =?, eligible_amount = ?, grade_id = ?"
 					+ " where event_id = ?;"; 
 			
 			ps =con.prepareStatement(sql);
@@ -247,9 +304,9 @@ public class EventDaoImpl implements EventDao{
 //			ps.setDate(3, Date.valueOf(e.getEndDate()));
 			ps.setString(2, e.getDescription());
 			ps.setDouble(3, e.getEligibleAmount());
-			ps.setInt(4, e.getId());
-//			ps.setbyte(7, Byte.vae.getpresentation());
-	
+			ps.setInt(4, e.getGrade().getGradeID());
+			ps.setInt(5, e.getId());
+			
 			ps.executeUpdate();	
 			
 			return true;
@@ -298,9 +355,7 @@ public class EventDaoImpl implements EventDao{
 			ps.setDouble(4, e.getEligibleAmount());
 			ps.setString(5, e.getReason());
 			ps.setInt(6, e.getId());
-			
-//			ps.setbyte(7, Byte.vae.getpresentation());
-	
+				
 			ps.executeUpdate();	
 			
 			return true;
@@ -310,5 +365,7 @@ public class EventDaoImpl implements EventDao{
 		}
 		return false;
 	}
+
+
 
 }

@@ -15,6 +15,8 @@ public class Employee {
 	private  String contact;
 	
 	private Department department; // enum vs class
+	
+	private String dept;
 		
 	private String title;
 	
@@ -118,4 +120,14 @@ public class Employee {
 	public void setRemainingClaimAmt(double remainingClaimAmt) {
 		this.remainingClaimAmt = remainingClaimAmt;
 	}
+
+	public String getDept() {
+		return dept;
+	}
+
+	public void setDept(String dept) {
+		this.dept = dept;
+	}
+	
+	
 }

@@ -34,11 +34,20 @@ public class EventController {
 		int id = ctx.sessionAttribute("empId");
 		Employee e = empServ.displayEmployeeById(id);
 		
+		if(e.getRemainingClaimAmt() == 0) {
+			
+			ctx.redirect("application.html");
+		}
+		
 		Event ev = new Event(eventType, startDate, endDate, requestDate, cost, desc, e);
 		eventServ.createEvent(ev);
 		
 		ctx.status(201);
-		ctx.redirect("dashboard.html");
+		if(e.getTitle().equals("General Employee")) {
+			ctx.redirect("dashboard.html");
+		}else {
+			ctx.redirect("approverDashboard.html");
+		}
 	}
 	
 	public void getAllEvents(Context ctx) {
@@ -85,10 +94,23 @@ public class EventController {
 			
 			eventList = eventServ.getAllEventByEmployeeDept(empDept);
 			
-			System.out.println(empDept);
+			//if coordinator then display event of coordinator of other department
+			
+			int id = ctx.sessionAttribute("empId");
+			Employee e = empServ.displayEmployeeById(id);
+			
+			if(e.getTitle().equals("Benefit Coordinator")) {
+				List<Event> eventOfAllBC = eventServ.getAllEventsByEmployeeTitle(e.getTitle());
+				
+				if(eventOfAllBC != null) {
+					for(Event ev :eventOfAllBC) {
+						eventList.add(ev);
+					}
+				}
+			}
 						
 			}
-		System.out.println(eventList.size());
+		
 		ctx.json(eventList);
 	}
 	

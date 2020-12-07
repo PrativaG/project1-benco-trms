@@ -21,5 +21,7 @@ public interface EventService {
 	
 	public List<Event> getAllEventByEmployeeDept(Department dept);
 	
+	public List<Event> getAllEventsByEmployeeTitle(String title);
+	
 	public boolean deleteEventById(int eventId);
 }

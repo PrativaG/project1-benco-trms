@@ -38,13 +38,6 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Event updateEvent(Event ev) {
 		
-		Event notUpdatedEvent = eventDao.selectById(ev.getId());
-		notUpdatedEvent.setCost(ev.getCost());
-		
-		double eligibleAmt = calculateEligibleAmount(notUpdatedEvent);
-		
-		ev.setEligibleAmount(eligibleAmt);
-		
 		if(eventDao.updateEventFromEmployee(ev)) return ev;
 		
 		return null;
@@ -52,6 +45,26 @@ public class EventServiceImpl implements EventService {
 	
 	@Override
 	public Event updateEventFromApprover(Event ev) {
+		
+		// adding the eligible amount of the reimbursement to employee total claim if the request is denied
+			if(ev.getCoordinatorApproval().equals("Denied")
+				|| ev.getDsApproval().equals("Denied")
+				|| ev.getHodApproval().equals("Denied")) {
+							
+				Employee updateClaimAmtEmployee = ev.getEmp();
+				
+				double afterRequest = updateClaimAmtEmployee.getRemainingClaimAmt() + ev.getEligibleAmount();
+
+				updateClaimAmtEmployee.setRemainingClaimAmt( afterRequest );
+				empServ.updateEmployee(updateClaimAmtEmployee);
+			}
+			
+		Event notUpdatedEvent = eventDao.selectById(ev.getId());
+		notUpdatedEvent.setCost(ev.getCost());
+		
+		double eligibleAmt = calculateEligibleAmount(notUpdatedEvent);
+		
+		ev.setEligibleAmount(eligibleAmt);
 		
 		if(eventDao.updateEventFromApprover(ev)) return ev;
 		
@@ -125,6 +138,12 @@ public class EventServiceImpl implements EventService {
 	public List<Event> getAllEventByEmployeeDept(Department dept) {
 		
 		return eventDao.selectEventByDept(dept);
+	}
+
+	@Override
+	public List<Event> getAllEventsByEmployeeTitle(String title) {
+		
+		return eventDao.selectEventByTtitle(title);
 	}
 
 	

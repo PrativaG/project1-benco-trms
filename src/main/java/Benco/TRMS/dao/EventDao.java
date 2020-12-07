@@ -17,6 +17,8 @@ public interface EventDao {
 	
 	public List<Event> selectEventByEmployee(int empId);
 	
+	public List<Event> selectEventByTtitle(String title);
+	
 	public boolean updateEventFromEmployee(Event e);
 	
 	public boolean updateEventFromApprover(Event e);

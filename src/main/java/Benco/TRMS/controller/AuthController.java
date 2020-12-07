@@ -39,8 +39,7 @@ public class AuthController {
 			
 			ctx.sessionAttribute("empId", emp.getEmployeeId());
 			
-			if(emp.getTitle().equals("General Employee")) {
-				
+			if(emp.getTitle().equals("General Employee")) {		
 				
 				ctx.redirect("dashboard.html");
 				
@@ -50,7 +49,15 @@ public class AuthController {
 				
 				ctx.sessionAttribute("empDept", emp.getDepartment());
 				ctx.redirect("approverDashboard.html");
-				
+
+//				if(emp.getTitle().equals("Direct Supervisor"))
+//					ctx.redirect("dsDashboard.html");
+//				
+//				if(emp.getTitle().equals("Department Head"))
+//					ctx.redirect("hodDashboard.html");
+//				
+//				if(emp.getTitle().equals("Benefit Coordinator"))
+//					ctx.redirect("bcDashboard.html");
 			}
 			
 		} else {
@@ -60,8 +67,10 @@ public class AuthController {
 	}
 	
 	public boolean checkUser(Context ctx) {
+		
 		boolean result = auth.validateToken(ctx.cookieStore("security"));
 		return result;
+		
 	}
 	
 	

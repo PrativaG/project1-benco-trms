@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Grade</title>
+</head>
+<body> 
+    <div>
+        <h2> Upload your Grade / Presentation</h2>
+
+        <form action = "http://localhost:9090/grade" method = "POST" enctype="multipart/form-data">
+            <label> Grading Format </label>
+            <select name="type">
+                <option value = "Grade"> Grade</option>
+                <option value = "Presentation"> Presentation </option>
+            </select>
+    
+          <br>
+          <input id="hiddenInput" type = "hidden" name = "event-id">
+            <input type = "file" name = "grade_file"> <br>
+            <input type = "submit">
+        </form>
+    </div>
+   
+    <script src = "addGrade.js"></script>
+</body>
+</html>

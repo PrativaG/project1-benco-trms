@@ -1,5 +1,10 @@
 window.onload = function(){
 
+    makeHttpRequestForEvent();
+    makeHttpRequestForEmployee();
+}
+
+let makeHttpRequestForEvent = function(){
     let xhr = new XMLHttpRequest();
 
     const url = "http://localhost:9090/event";
@@ -25,10 +30,7 @@ window.onload = function(){
                 break;
 
             case 4:
-                console.log("Wait FINISHED!");
-                console.log(document.cookie);
-                
-
+                console.log("Wait FINISHED!");                
 
                 //logic to add to event table
                 if(xhr.status == 400){
@@ -41,7 +43,22 @@ window.onload = function(){
                     let eventList = JSON.parse(xhr.responseText);
 
                     eventList.forEach(ev => {
-                        addEventToRow(ev);
+
+                        if(ev.dsApproval == "Accepted"
+                            && ev.hodApproval == "Accepted"
+                            && ev.coordinatorApproval == "Accepted"){
+
+                                addEventToPastTable(ev);
+                            }
+
+                        if(ev.dsApproval == "Denied"
+                        || ev.hodApproval == "Denied"
+                        || ev.coordinatorApproval == "Denied"){
+
+                            addEventToPastTable(ev);
+                        }
+                        else
+                            addEventToRow(ev);
                     });
                 }
 
@@ -53,18 +70,159 @@ window.onload = function(){
 
     xhr.send();
 
+  //  showClaimAmt(empClaimAmt);
+
 }
 
-let addMessageToRow = function(){
+let makeHttpRequestForEmployee = function(){
+    
+    let xhr = new XMLHttpRequest();
 
-    let table = document.getElementById("event-table");
+    const url2 = "http://localhost:9090/employee";
+
+    xhr.onreadystatechange = function(){
+
+        switch(xhr.readyState){
+
+            case 0:
+                console.log("nothing has been initialized");
+                break;
+            
+            case 1:
+                console.log("connection established");
+                break;
+
+            case 2:
+                console.log("request sent");
+                break;
+            
+            case 3:
+                console.log("waiting for response");
+                break;
+
+            case 4:
+                console.log("Wait FINISHED!");
+                console.log(document.cookie);
+                
+                if(xhr.status == 200){
+
+                    let employee = JSON.parse(xhr.responseText);
+                   
+                    sessionStorage.setItem("titleOfLoggedIn", employee.title);
+                    sessionStorage.setItem("idOfLoggedIn", employee.employeeId);
+
+                    showEmployeeInfo(employee);
+                }
+
+                break; 
+        }
+    }
+    xhr.open("GET", url2, true);
+
+    xhr.send();
+}
+
+let showEmployeeInfo = function(em){
+
+    let heading1 = document.getElementById("name");
+    heading1.innerHTML = "Welcome, " +em.firstName; 
+    
+    let heading2 = document.getElementById("department");
+    heading2.innerHTML = "Department: " +em.department;
+
+    let heading3 = document.getElementById("title");
+    heading3.innerHTML = "Position: " +em.title;
+
+    let heading4 = document.getElementById("claimAmtHeading");
+    heading4.innerHTML = "Available Claim Amount: " +em.remainingClaimAmt;
+}
+
+let addEventToPastTable = function(event){
+    let table = document.getElementById("past-event-table");
 
     let tableRow = document.createElement("tr");
 
-    tableRow.innerHTML = "No request made for reimbursement yet!!"; 
+    let typeCol = document.createElement("td");
+    let totalCost = document.createElement("td");
+    let reimAmtCol = document.createElement("td");
+    let dsApproveCol = document.createElement("td");
+    let hodApprovalCol = document.createElement("td");
+    let coordApprovalCol = document.createElement("td");
+    let detailsCol = document.createElement("td");
+    let gradeCol = document.createElement("td");
+    let removeCol = document.createElement("td");
+
+    tableRow.appendChild(typeCol);
+    tableRow.appendChild(totalCost);
+
+    tableRow.appendChild(reimAmtCol);  
+    tableRow.appendChild(dsApproveCol);
+    tableRow.appendChild(hodApprovalCol);
+    tableRow.appendChild(coordApprovalCol);
+    tableRow.appendChild(detailsCol);
+    tableRow.appendChild(gradeCol); 
+    tableRow.appendChild(removeCol);
 
     table.appendChild(tableRow);
 
+    //creating form for details of the event
+    let detailForm = document.createElement("form");
+    detailForm.action = "detailsOfEvent.html";
+    let input1 = document.createElement("input");
+    let input2 = document.createElement("input");
+
+    input1.type = "hidden";
+    input1.name = "eventId";
+    input1.value = event.id;
+
+    input2.type = "submit";
+    input2.value = "See more...";
+
+    detailForm.appendChild(input1);
+    detailForm.appendChild(input2);
+
+     //creating link and button for add grades
+     let addGradeLink = document.createElement("form");
+     addGradeLink.action = "addGrade.html";
+     let inputX = document.createElement("input");
+     let inputY = document.createElement("input");
+ 
+     inputX.type = "hidden";
+     inputX.name = "eventId";
+     inputX.value = event.id;
+ 
+     inputY.type = "submit";
+     inputY.value = "Add Grade";
+ 
+     addGradeLink.appendChild(inputX);
+     addGradeLink.appendChild(inputY);
+
+    //creating form and button for removing request
+    let removeForm = document.createElement("form");
+    removeForm.action = "http://localhost:9090/event/" +event.id;
+    removeForm.method = "DELETE";
+    input1 = document.createElement("input");
+    input2 = document.createElement("input");
+
+    input1.type = "hidden";
+    input1.name = "eventId";
+    input1.value = event.id;
+
+    input2.type = "submit";
+    input2.value = "Delete";
+
+    removeForm.appendChild(input1);
+    removeForm.appendChild(input2);
+
+    typeCol.innerHTML  = event.type;
+    totalCost.innerHTML = event.cost;
+    reimAmtCol.innerHTML = event.eligibleAmount;
+    dsApproveCol.innerHTML = event.dsApproval;
+    hodApprovalCol.innerHTML = event.hodApproval;
+    coordApprovalCol.innerHTML = event.coordinatorApproval;
+    detailsCol.appendChild(detailForm);
+    gradeCol.appendChild(addGradeLink);
+    removeCol.appendChild(removeForm);
 }
 
 let addEventToRow = function(event){
@@ -74,6 +232,7 @@ let addEventToRow = function(event){
     let tableRow = document.createElement("tr");
 
     let typeCol = document.createElement("td");
+    let totalCost = document.createElement("td");
     let reimAmtCol = document.createElement("td");
     let dsApproveCol = document.createElement("td");
     let hodApprovalCol = document.createElement("td");
@@ -84,6 +243,8 @@ let addEventToRow = function(event){
     let updateCol = document.createElement("td");
 
     tableRow.appendChild(typeCol);
+    tableRow.appendChild(totalCost);
+
     tableRow.appendChild(reimAmtCol);  
     tableRow.appendChild(dsApproveCol);
     tableRow.appendChild(hodApprovalCol);
@@ -112,14 +273,20 @@ let addEventToRow = function(event){
     detailForm.appendChild(input2);
 
     //creating link and button for add grades
-    let addGradeLink = document.createElement("a");
-    let gradelink = document.createTextNode("Add Grade"); 
-    addGradeLink.appendChild(gradelink);
-    addGradeLink.title = "Grade";
-    addGradeLink.href = "addGrade.html";
+    let addGradeLink = document.createElement("form");
+    addGradeLink.action = "addGrade.html";
+    let inputX = document.createElement("input");
+    let inputY = document.createElement("input");
 
-    let addGrade = document.createElement("button");
-    addGrade.appendChild(addGradeLink);
+    inputX.type = "hidden";
+    inputX.name = "eventId";
+    inputX.value = event.id;
+
+    inputY.type = "submit";
+    inputY.value = "Add Grade";
+
+    addGradeLink.appendChild(inputX);
+    addGradeLink.appendChild(inputY);
 
     //creating form and button for removing request
     let removeForm = document.createElement("form");
@@ -155,14 +322,18 @@ let addEventToRow = function(event){
     updateForm.appendChild(inputy);
 
     typeCol.innerHTML  = event.type;
+    totalCost.innerHTML = event.cost;
     reimAmtCol.innerHTML = event.eligibleAmount;
     dsApproveCol.innerHTML = event.dsApproval;
     hodApprovalCol.innerHTML = event.hodApproval;
     coordApprovalCol.innerHTML = event.coordinatorApproval;
     detailsCol.appendChild(detailForm);
-    gradeCol.appendChild(addGrade);
     removeCol.appendChild(removeForm);
     updateCol.appendChild(updateForm);
+
+    if(event.grade.gradeId != 0 ){
+        gradeCol.appendChild(addGradeLink);
+    }
 }
 
 

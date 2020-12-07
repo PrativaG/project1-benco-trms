@@ -16,15 +16,21 @@
         <div class="dropdown-content">
           <a id ="profile" href="profile.html">Your Profile</a>
           <form id="logoutForm" method="post" action = "http://localhost:9090/logout">
-              <input id = "logoutBtn" type ="submit"  value="Logout">
+              <input onclick="sessionStorage.clear()" id = "logoutBtn" type ="submit"  value="Logout">
           </form>
         </div>   
     </div>
+
     
-   <div id = "wrapper">
+    <h2 id = "name"></h2>
+    <h3 id = "department"></h2>
+    <h3 id = "title"></h2>
+    <h2 id="claimAmtHeading"> </h2>
+    
+   <div class = "wrapper">
     <div id ="listRequest">
-        <h1>  Reimbursements! </h1>
-        <table class = "tableStyle" id = "approve-event-table">
+        <h1> New Reimbursement Requests! </h1>
+        <table class = "tableStyle approve-event-table" >
             <tr>
                 <th> Event Type</th> 
                 <th> Reimbursement Amount</th>
@@ -39,11 +45,35 @@
     
         </table>
        </div>
+
+       <div class = "wrapper">
+        <div id ="listRequest">
+            <h1>  Past Reimbursement Requests! </h1>
+            <table class = "tableStyle past-event-table" >
+                <tr>
+                    <th> Event Type</th> 
+                    <th> Reimbursement Amount</th>
+                    <th> Supervisor Approval</th>
+                    <th> HOD Approval</th>
+                    <th> Coordinator Approval</th>
+                    <th> Reason </th>
+                    <th> Details </th>
+                    <th> Additional Info</th>
+                    <th></th>
+                </tr>
+        
+            </table>
+           </div>
     
        <div id = "makeRequest">
            <button  class = "bigButton"> <a href = "application.html">
             New Reimbursement
             <br>  Request
+           </a></button>
+
+           <button  class = "bigButton"> <a href = "dashboard.html">
+            View Your <br>  
+            Reimbursement Request
            </a></button>
        </div>
    </div>

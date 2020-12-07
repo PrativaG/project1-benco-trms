@@ -18,12 +18,8 @@ public class Event {
 	
 	private double cost;
 	
-	private String grade;
-	
 	private String description;
-	
-//	private File presentation;
-	
+		
 	private double eligibleAmount;
 	
 	private String reason;//for rejection and added amount
@@ -35,7 +31,8 @@ public class Event {
 	private String hodApproval;
 	
 	private Employee emp;
-		
+	
+	private Grade grade;
 	
 	public Event() {
 		super();
@@ -105,11 +102,11 @@ public class Event {
 	}
 	
 
-	public String getGrade() {
+	public Grade getGrade() {
 		return grade;
 	}
 
-	public void setGrade(String grade) {
+	public void setGrade(Grade grade) {
 		this.grade = grade;
 	}
 
@@ -120,14 +117,6 @@ public class Event {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
-
-//	public File getpresentation() {
-//		return presentation;
-//	}
-//
-//	public void setpresentation(File presentation) {
-//		this.presentation = presentation;
-//	}
 
 	public Employee getEmp() {
 		return emp;
