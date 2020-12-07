@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Benco.TRMS.dao.EventDaoImpl;
 import Benco.TRMS.pojos.Event;
 import Benco.TRMS.pojos.Grade;
 import Benco.TRMS.service.EventServiceImpl;
@@ -19,6 +20,7 @@ public class GradeController {
 	
 	private static GradeServiceImpl gradeServ = new GradeServiceImpl();
 	private static EventServiceImpl eventServ = new EventServiceImpl();
+	private static EventDaoImpl eventDao = new EventDaoImpl();
 	
 	public void createGrade(Context ctx) {
 		
@@ -54,7 +56,7 @@ public class GradeController {
 		//updating event since grade is being added to the event
 		Event e = eventServ.getEventById(eventId);
 		e.setGrade(newGrade);
-		eventServ.updateEvent(e);
+		eventDao.addGradetoEvent(e);
 		
 		ctx.redirect("dashboard.html");
 	}

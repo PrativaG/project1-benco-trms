@@ -39,6 +39,7 @@ public class ServerDriver {
 		app.delete(EVENT_URL +"/:eventId", ctx -> eventCont.deleteEvent(ctx));
 		app.post(EVENT_URL +"/:eventId", ctx -> eventCont.updateEventFromEmployee(ctx));
 		app.post(EVENT_URL +"/dashboard/:eventId", ctx -> eventCont.updateEventFromApprover(ctx));
+		app.post(EVENT_URL +"/addMoney/:eventId", ctx -> eventCont.addMoneytoReimbursement(ctx));
 		
 		//handling all login and logout requests
 		app.post(LOGIN_URL, ctx -> authCont.login(ctx));

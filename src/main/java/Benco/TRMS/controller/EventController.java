@@ -129,7 +129,9 @@ public class EventController {
 		double cost = Double.valueOf(ctx.formParam("cost"));
 		String description = ctx.formParam("description");
 		
-		Event ev = new Event(id, cost, description);
+		Event ev = eventServ.getEventById(id);
+		ev.setCost(cost);
+		ev.setDescription(description);
 		
 		eventServ.updateEvent(ev);
 		
@@ -170,6 +172,20 @@ public class EventController {
 		
 		ctx.redirect("http://localhost:9090/approverDashboard.html");
 		
+	}
+	
+	public void addMoneytoReimbursement(Context ctx) {
+		
+		int id = Integer.valueOf(ctx.pathParam("eventId"));
+		double addedAmount = Integer.valueOf(ctx.formParam("extraAmount"));
+		
+		Event e = eventServ.getEventById(id);
+		e.setEligibleAmount(addedAmount + e.getEligibleAmount());
+		
+		eventServ.addMoney(e);
+		
+		ctx.redirect("http://localhost:9090/approverDashboard.html");
+
 	}
 	
 	public void storeEventIdAndDisplay(Context ctx) {

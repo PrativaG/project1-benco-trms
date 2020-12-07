@@ -38,6 +38,22 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Event updateEvent(Event ev) {
 		
+		double eligibleAmt = calculateEligibleAmount(ev);
+		
+		if(ev.getEmp().getRemainingClaimAmt() < eligibleAmt) {
+			eligibleAmt = eligibleAmt - ev.getEmp().getRemainingClaimAmt();
+		}
+		
+		ev.setEligibleAmount(eligibleAmt);
+		
+		//updating employee available claim amount due to this event request
+		Employee updateClaimAmtEmployee = ev.getEmp();
+		double afterRequest = updateClaimAmtEmployee.getRemainingClaimAmt() - eligibleAmt;
+	
+		updateClaimAmtEmployee.setRemainingClaimAmt( afterRequest );
+		empServ.updateEmployee(ev.getEmp());
+		
+		
 		if(eventDao.updateEventFromEmployee(ev)) return ev;
 		
 		return null;
@@ -145,6 +161,10 @@ public class EventServiceImpl implements EventService {
 		
 		return eventDao.selectEventByTtitle(title);
 	}
-
+	
+	public Event addMoney(Event e) {
+		if(eventDao.updateEventFromEmployee(e)) return e;
+		return null;
+	}
 	
 }

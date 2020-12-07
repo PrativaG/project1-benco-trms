@@ -87,6 +87,7 @@ let addPendingGrade = function(ev){
   
     let eventCol = document.createElement("td");
     let gradeCol = document.createElement("td");
+    let eventGradeImg = document.createElement("img");
     let acceptCol = document.createElement("td");
     let denyCol = document.createElement("td");
     let statusCol = document.createElement("td");
@@ -139,10 +140,14 @@ let addPendingGrade = function(ev){
      denyForm.appendChild(input1);
      denyForm.appendChild(input2);
 
+     //getting image
+     eventGradeImg.src = "data:image/png;base64," + ev.grade.file;
+     eventGradeImg.alt = "No attachment found!";
+     eventGradeImg.style = "width : 200px";
+
      eventCol.innerHTML = ev.type;
      statusCol.innerHTML = ev.grade.status;
-
-     gradeCol.innerHTML = ev.grade.file;
+     gradeCol.appendChild(eventGradeImg);
      acceptCol.appendChild(acceptForm);
      denyCol.appendChild(denyForm);
 

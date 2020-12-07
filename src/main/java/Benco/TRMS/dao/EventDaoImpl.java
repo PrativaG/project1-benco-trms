@@ -293,7 +293,7 @@ public class EventDaoImpl implements EventDao{
 		
 		try(Connection con = conUtil.getConnection()){
 			
-			String sql = "update emp_event set event_cost = ?, description =?, eligible_amount = ?, grade_id = ?"
+			String sql = "update emp_event set event_cost = ?, description =?, eligible_amount = ?"
 					+ " where event_id = ?;"; 
 			
 			ps =con.prepareStatement(sql);
@@ -304,8 +304,7 @@ public class EventDaoImpl implements EventDao{
 //			ps.setDate(3, Date.valueOf(e.getEndDate()));
 			ps.setString(2, e.getDescription());
 			ps.setDouble(3, e.getEligibleAmount());
-			ps.setInt(4, e.getGrade().getGradeID());
-			ps.setInt(5, e.getId());
+			ps.setInt(4, e.getId());
 			
 			ps.executeUpdate();	
 			
@@ -316,6 +315,30 @@ public class EventDaoImpl implements EventDao{
 		}
 		return false;
 	}
+	
+	//to add grade to event
+	public boolean addGradetoEvent(Event e) {
+		
+		try(Connection con = conUtil.getConnection()){
+			
+			String sql = "update emp_event set  grade_id = ?"
+					+ " where event_id = ?;"; 
+			
+			ps =con.prepareStatement(sql);
+			
+			ps.setInt(1, e.getGrade().getGradeID());;
+			ps.setInt(2, e.getId());
+			
+			ps.executeUpdate();	
+			
+			return true;
+			
+		}catch(SQLException s) {
+			s.printStackTrace();
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean deleteById(int id) {
 		

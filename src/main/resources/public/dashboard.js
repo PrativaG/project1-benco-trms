@@ -38,11 +38,15 @@ let makeHttpRequestForEvent = function(){
                    addMessageToRow();
                 }
 
+              
+
                 if(xhr.status == 200){
 
                     let eventList = JSON.parse(xhr.responseText);
 
                     eventList.forEach(ev => {
+
+                        console.log(ev);
 
                         if(ev.dsApproval == "Accepted"
                             && ev.hodApproval == "Accepted"
@@ -51,7 +55,7 @@ let makeHttpRequestForEvent = function(){
                                 addEventToPastTable(ev);
                             }
 
-                        if(ev.dsApproval == "Denied"
+                        else if(ev.dsApproval == "Denied"
                         || ev.hodApproval == "Denied"
                         || ev.coordinatorApproval == "Denied"){
 
@@ -221,8 +225,17 @@ let addEventToPastTable = function(event){
     hodApprovalCol.innerHTML = event.hodApproval;
     coordApprovalCol.innerHTML = event.coordinatorApproval;
     detailsCol.appendChild(detailForm);
-    gradeCol.appendChild(addGradeLink);
     removeCol.appendChild(removeForm);
+
+    if(event.dsApproval == "Accepted"
+        && event.hodApproval == "Accepted"
+        && event.coordinatorApproval == "Accepted"){
+
+        if(event.grade.gradeID == 0 ){
+            gradeCol.appendChild(addGradeLink);
+        }
+    }
+
 }
 
 let addEventToRow = function(event){
@@ -331,7 +344,7 @@ let addEventToRow = function(event){
     removeCol.appendChild(removeForm);
     updateCol.appendChild(updateForm);
 
-    if(event.grade.gradeId != 0 ){
+    if(event.grade.gradeID == 0 ){
         gradeCol.appendChild(addGradeLink);
     }
 }
