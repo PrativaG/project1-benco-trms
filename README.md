@@ -26,7 +26,7 @@ List of features ready and TODOs for future development
 
 ## Getting Started
    
-- git clone https://github.com/chrisbreniser/Project-1-TRMS.git
+- git clone https://github.com/PrativaG/project1-benco-trms.git
 
 > Setup your code 
 
