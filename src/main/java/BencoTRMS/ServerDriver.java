@@ -1,4 +1,4 @@
-package Benco.TRMS;
+package BencoTRMS;
 
 import Benco.TRMS.controller.AuthController;
 import Benco.TRMS.controller.EmployeeController;
