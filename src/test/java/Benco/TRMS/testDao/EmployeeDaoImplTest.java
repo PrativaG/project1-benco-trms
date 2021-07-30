@@ -70,7 +70,7 @@ public class EmployeeDaoImplTest {
 		
 		Mockito.when(emp.getDepartment()).thenReturn(Department.FINANCE);
 		
-		emp = new Employee("Mighty", "Jackson", dept, "123456789", "mj@mail.com", "password" );
+		emp = new Employee("Mighty", "Jackson", dept, "123456789", "mj@mail.com", "password", "Manager" );
 	}
 
 	@After

@@ -1,10 +1,11 @@
-package Benco.TRMS.driver;
+package Benco.TRMS;
 
 import Benco.TRMS.controller.AuthController;
 import Benco.TRMS.controller.EmployeeController;
 import Benco.TRMS.controller.EventController;
 import Benco.TRMS.controller.GradeController;
 import io.javalin.Javalin;
+import io.javalin.http.staticfiles.Location;
 
 public class ServerDriver {
 	
@@ -20,7 +21,7 @@ public class ServerDriver {
 	public static void main(String[] args) {
 		
 		Javalin app = Javalin.create(config -> {
-			config.addStaticFiles("/public");
+			config.addStaticFiles("src/resources/public", Location.EXTERNAL);
 		}).start(9090);
 		
 		app.get("/hello", ctx -> ctx.html("Hello project 1 so so exciting!"));

@@ -23,7 +23,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import Benco.TRMS.dao.EventDaoImpl;
 import Benco.TRMS.pojos.Employee;
 import Benco.TRMS.pojos.Event;
-import Benco.TRMS.pojos.Reimbursement;
 import Benco.TRMS.util.ConnectionUtil;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -65,7 +64,7 @@ public class EventDaoImplTest {
 		
 		Mockito.when(emp.getEmployeeId()).thenReturn(1);
 		
-		event = new Event("Uni", LocalDate.parse("2020-10-22"), LocalDate.parse("2020-12-20"), 532.68, null);
+		event = new Event();
 	
 	}
 
