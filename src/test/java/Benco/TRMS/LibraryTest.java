@@ -4,6 +4,9 @@
 package Benco.TRMS;
 
 import org.junit.Test;
+
+import BencoTRMS.Library;
+
 import static org.junit.Assert.*;
 
 public class LibraryTest {

@@ -20,10 +20,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import Benco.TRMS.dao.EventDaoImpl;
-import Benco.TRMS.pojos.Employee;
-import Benco.TRMS.pojos.Event;
-import Benco.TRMS.util.ConnectionUtil;
+import BencoTRMS.dao.EventDaoImpl;
+import BencoTRMS.pojos.Employee;
+import BencoTRMS.pojos.Event;
+import BencoTRMS.util.ConnectionUtil;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventDaoImplTest {

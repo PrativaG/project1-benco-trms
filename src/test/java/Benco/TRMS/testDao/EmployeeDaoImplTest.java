@@ -20,11 +20,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import Benco.TRMS.dao.EmployeeDao;
-import Benco.TRMS.dao.EmployeeDaoImpl;
-import Benco.TRMS.pojos.Department;
-import Benco.TRMS.pojos.Employee;
-import Benco.TRMS.util.ConnectionUtil;
+import BencoTRMS.dao.EmployeeDao;
+import BencoTRMS.dao.EmployeeDaoImpl;
+import BencoTRMS.pojos.Department;
+import BencoTRMS.pojos.Employee;
+import BencoTRMS.util.ConnectionUtil;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmployeeDaoImplTest {

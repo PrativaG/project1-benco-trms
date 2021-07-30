@@ -1,9 +1,9 @@
 package BencoTRMS;
 
-import Benco.TRMS.controller.AuthController;
-import Benco.TRMS.controller.EmployeeController;
-import Benco.TRMS.controller.EventController;
-import Benco.TRMS.controller.GradeController;
+import BencoTRMS.controller.AuthController;
+import BencoTRMS.controller.EmployeeController;
+import BencoTRMS.controller.EventController;
+import BencoTRMS.controller.GradeController;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 
