@@ -4,8 +4,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import BencoTRMS.dao.EmployeeDaoImpl;
 import BencoTRMS.exception.TitleNotAvailableException;
 import BencoTRMS.pojos.Employee;
@@ -14,7 +12,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	private EmployeeDaoImpl empDao = new EmployeeDaoImpl();
 	
-	Logger servicelog = Logger.getLogger(EmployeeServiceImpl.class.getName());
 	@Override
 	public Employee createEmployee(Employee e) throws TitleNotAvailableException {
 		
@@ -91,11 +88,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 				
 				e.setPassword(hashedPassword);
 				
-				servicelog.info("Password was hasehd and assigned to employee successfully!");
 			
 			} catch (NoSuchAlgorithmException e1) {
 				
-				servicelog.error("NoSuchAlgorithmException at Service" +e);
 				
 				e1.printStackTrace();
 			
