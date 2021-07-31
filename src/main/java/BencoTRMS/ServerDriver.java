@@ -22,7 +22,7 @@ public class ServerDriver {
 		
 		Javalin app = Javalin.create(config -> {
 			config.addStaticFiles("/public");
-		}).start(9090);
+		}).start("13.77.150.135", 9090);
 		
 		app.get("/hello", ctx -> ctx.html("Hello project 1 so so exciting!"));
 		app.post(EMP_URL,  ctx -> empCont.createEmployee(ctx));
@@ -52,4 +52,5 @@ public class ServerDriver {
 		app.post("/grade/:gradeId" , ctx -> gradeCont.updateGrade(ctx));
 	}
 
+	
 }
