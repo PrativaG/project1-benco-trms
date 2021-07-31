@@ -13,7 +13,7 @@ plugins {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'BencoTRMS.ServerDriver' BencoTRMS
+		attributes 'Main-Class': 'BencoTRMS.ServerDriver' 
 	}
 	
 	from {
