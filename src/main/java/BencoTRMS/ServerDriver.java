@@ -21,7 +21,7 @@ public class ServerDriver {
 	public static void main(String[] args) {
 		
 		Javalin app = Javalin.create(config -> {
-			config.addStaticFiles("src/resources/public", Location.EXTERNAL);
+			config.addStaticFiles("/public");
 		}).start(9090);
 		
 		app.get("/hello", ctx -> ctx.html("Hello project 1 so so exciting!"));
